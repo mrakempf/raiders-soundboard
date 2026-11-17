@@ -343,6 +343,7 @@ textarea.txt{min-height:64px;font-family:var(--f-mono);font-size:.78rem;resize:v
       <ol class="list" id="song-list"></ol>
 
       <div class="pl-set">
+        <div id="coach-only" class="pl-set" hidden>
         <h3 class="label">Music source</h3>
         <div class="seg" role="group" aria-label="Where the music comes from">
           <button type="button" data-src="files">Saved songs</button>
@@ -361,7 +362,17 @@ textarea.txt{min-height:64px;font-family:var(--f-mono);font-size:.78rem;resize:v
             <button class="btn gold" id="yt-save" type="button">Use playlist</button>
           </div>
         </div>
+        </div>
         <label class="check"><input type="checkbox" id="duck"><span>Lower the music while a sound pad plays<br><span class="label" id="duck-note"></span></span></label>
+        <div class="box" id="coach-box">
+          <h3>Coach tools</h3>
+          <p id="coach-msg"></p>
+          <form class="row" id="coach-in">
+            <input class="txt" id="coach-code" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Coach code" aria-label="Coach code">
+            <button class="btn gold" type="submit">Unlock</button>
+          </form>
+          <div class="row" id="coach-out" hidden><button class="btn" id="coach-lock" type="button">Lock this device</button></div>
+        </div>
       </div>
     </div>
   </div>
@@ -372,6 +383,7 @@ textarea.txt{min-height:64px;font-family:var(--f-mono);font-size:.78rem;resize:v
 <script src="clips.js"></script>
 <script src="songs.js"></script>
 <script src="playlists.js"></script>
+<script src="coach.js"></script>
 <script>
 const $=s=>document.querySelector(s);
 const store={
@@ -682,6 +694,36 @@ function paintSeg(){
   $('#files-pane').hidden=pane==='yt';$('#yt-pane').hidden=pane!=='yt';
   $('#yt-link').value=music.yt?'https://www.youtube.com/playlist?list='+music.yt:'';
 }
+/* ---------- coach mode ----------
+   Players can play, pick and search. Making or changing playlists, adding songs and the music source
+   need a coach code, entered once per device. coach.js holds only salted, slow hashes of the codes
+   (made by tools/build-raiders.js from tools/raiders-coaches.json, which never leaves this computer).
+   This keeps players out of the editing screens; it is not bank-grade security, since the app has no server. */
+const COACH=window.COACH||{salt:'',iter:1,codes:[]};
+async function codeHash(code){
+  const enc=new TextEncoder(),key=await crypto.subtle.importKey('raw',enc.encode(code.trim().toLowerCase()),'PBKDF2',false,['deriveBits']);
+  const bits=await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:enc.encode(COACH.salt),iterations:COACH.iter},key,256);
+  return[...new Uint8Array(bits)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+/* a code that was changed or removed stops working on every device at the next update */
+let coach=COACH.codes.find(c=>c.h===store.get('rd-coach',''))||null;
+const canEdit=()=>!!coach;
+function paintCoach(){
+  $('#coach-only').hidden=!coach;$('#coach-in').hidden=!!coach;$('#coach-out').hidden=!coach;
+  $('#coach-msg').textContent=coach?'Coach mode is on for this device'+(coach.name?' ('+coach.name+')':'')+'. You can make and change playlists and add songs.':'Playlists are locked. Coaches: enter your code to make changes on this device.';
+}
+$('#coach-in').addEventListener('submit',async e=>{
+  e.preventDefault();const inp=$('#coach-code'),v=inp.value;if(!v.trim())return inp.focus();
+  let h='';try{h=await codeHash(v)}catch{toast('This browser cannot check codes. Open the app from its web address.');return}
+  const m=COACH.codes.find(c=>c.h===h);inp.value='';
+  if(!m){toast('That code did not work.');return}
+  coach=m;store.set('rd-coach',h);paintCoach();paintList();toast('Coach mode on');
+});
+$('#coach-lock').addEventListener('click',()=>{
+  coach=null;store.set('rd-coach','');editing=false;adding=null;closePanels();
+  if(pane==='yt'&&!isYT())pane='files';paintCoach();paintList();toast('Locked. Players can play music but not change playlists.');
+});
+
 /* ---------- playlists ----------
    All songs: the whole library. Team playlists: published with the app (tools/raiders-playlists.json).
    My playlists: made on this device and kept here. A share code carries a playlist to another phone. */
@@ -750,13 +792,19 @@ function paintLists(){
   chip('all','All songs',library.length);
   TEAM.forEach(l=>chip(l.id,l.name,listSongs(l.id).length,'Team'));
   myLists.forEach(l=>chip(l.id,l.name,listSongs(l.id).length));
-  const add=document.createElement('button');add.type='button';add.className='pl-chip add';add.id='pl-add';add.textContent='+ New';box.appendChild(add);
+  if(canEdit()){const add=document.createElement('button');add.type='button';add.className='pl-chip add';add.id='pl-add';add.textContent='+ New';box.appendChild(add)}
   /* bring the selected chip into view sideways only, so the song list never jumps */
   const on=box.querySelector('[aria-pressed="true"]');if(on&&(on.offsetLeft<box.scrollLeft||on.offsetLeft+on.offsetWidth>box.scrollLeft+box.clientWidth))box.scrollLeft=on.offsetLeft-16;
 }
 function btn(label,fn,cls){const b=document.createElement('button');b.type='button';b.className='btn'+(cls?' '+cls:'');b.textContent=label;b.addEventListener('click',fn);return b}
 function paintBar(){
   const bar=$('#pl-bar');bar.innerHTML='';const l=listById(view),n=listSongs(view).length;
+  if(!canEdit()){   /* players: play and pick, nothing that changes a playlist */
+    editing=false;adding=null;
+    if(n)bar.appendChild(btn(view==='all'?'▶ Play all songs':'▶ Play',()=>playList(view),'gold'));
+    else{const p=document.createElement('p');p.className='note';p.textContent='This playlist is empty.';bar.appendChild(p)}
+    return;
+  }
   if(view==='all'){
     if(adding){
       const a=listById(adding),d=document.createElement('div');d.className='adding';
@@ -857,7 +905,7 @@ function paintList(scrollToCurrent){
       const on=target.songs.includes(id),b=add(on?'✓':'＋','tg',(on?'Take ':'Add ')+s.title+(on?' out of ':' to ')+target.name,()=>{
         const now=toggleSong(target,id);b.textContent=now?'✓':'＋';b.setAttribute('aria-pressed',now);
       });b.setAttribute('aria-pressed',on);
-    }else if(s.blob&&view==='all')add('✕','rm','Remove '+s.title,()=>removeSong(s));
+    }else if(s.blob&&view==='all'&&canEdit())add('✕','rm','Remove '+s.title,()=>removeSong(s));
     ol.appendChild(li);
   });
   if(scrollToCurrent){const c=ol.querySelector('.cur');if(c)c.scrollIntoView({block:'center'})}
@@ -965,7 +1013,7 @@ $('#install-x').addEventListener('click',()=>{store.set('rd-install-x',true);$('
 showInstall();
 
 /* ---------- start ---------- */
-render();
+render();paintCoach();
 (async()=>{
   await idbOpen();
   const saved=(await idbAll()).sort((a,b)=>a.added-b.added);
