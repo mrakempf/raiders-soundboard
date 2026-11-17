@@ -236,6 +236,11 @@ window.PADS=[
   "cat": "music"
  },
  {
+  "file": "clips/music-bust-a-move.mp3",
+  "label": "Bust A Move",
+  "cat": "music"
+ },
+ {
   "file": "clips/music-cbs-college-basketball.mp3",
   "label": "CBS College Basketball",
   "cat": "music"
@@ -271,6 +276,11 @@ window.PADS=[
   "cat": "music"
  },
  {
+  "file": "clips/music-jump.mp3",
+  "label": "Jump",
+  "cat": "music"
+ },
+ {
   "file": "clips/music-let-s-get-ready-to-rumble-space-jam.mp3",
   "label": "Let's Get Ready to Rumble",
   "cat": "music"
@@ -291,6 +301,11 @@ window.PADS=[
   "cat": "music"
  },
  {
+  "file": "clips/music-no-sleep-till-brooklyn.mp3",
+  "label": "No Sleep Till Brooklyn",
+  "cat": "music"
+ },
+ {
   "file": "clips/music-starwarstheme.mp3",
   "label": "Star Wars theme",
   "cat": "music"
@@ -298,6 +313,11 @@ window.PADS=[
  {
   "file": "clips/music-3-dr-dre-still-dre-instrumental-long.mp3",
   "label": "Still D.R.E. (instrumental)",
+  "cat": "music"
+ },
+ {
+  "file": "clips/music-turn-the-lights-off-levels-calling-mashup.mp3",
+  "label": "Turn The Lights Off / Levels / Calling",
   "cat": "music"
  },
  {

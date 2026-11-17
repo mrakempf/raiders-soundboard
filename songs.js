@@ -21,6 +21,11 @@ window.SONGS=[
   "artist": ""
  },
  {
+  "file": "songs/Beastie%20Boys%20-%20No%20Sleep%20Till%20Brooklyn.mp3",
+  "title": "No Sleep Till Brooklyn",
+  "artist": "Beastie Boys"
+ },
+ {
   "file": "songs/Big%20Sean%20-%20Bounce%20Back.mp3",
   "title": "Bounce Back",
   "artist": "Big Sean"
@@ -161,6 +166,11 @@ window.SONGS=[
   "artist": "Kanye West"
  },
  {
+  "file": "songs/Kato%20%26%20Jon%20x%20Avicii%20x%20Sebastian%20Ingrosso%20%26%20Alesso%20-%20Turn%20The%20Lights%20Off%20-%20Levels%20-%20Calling%20(Mashup).mp3",
+  "title": "Turn The Lights Off - Levels - Calling (Mashup)",
+  "artist": "Kato & Jon x Avicii x Sebastian Ingrosso & Alesso"
+ },
+ {
   "file": "songs/Kendrick%20Lamar%20-%20Alright.mp3",
   "title": "Alright",
   "artist": "Kendrick Lamar"
@@ -169,6 +179,11 @@ window.SONGS=[
   "file": "songs/Kid%20Cudi%20-%20Pursuit%20of%20Happiness.mp3",
   "title": "Pursuit of Happiness",
   "artist": "Kid Cudi"
+ },
+ {
+  "file": "songs/Kris%20Kross%20-%20Jump.mp3",
+  "title": "Jump",
+  "artist": "Kris Kross"
  },
  {
   "file": "songs/Kurtis%20Blow%20-%20Basketball.mp3",
@@ -281,6 +296,11 @@ window.SONGS=[
   "artist": "Roy Woods"
  },
  {
+  "file": "songs/Run-D.M.C.%20ft.%20Aerosmith%20-%20Walk%20This%20Way.mp3",
+  "title": "Walk This Way",
+  "artist": "Run-D.M.C. ft. Aerosmith"
+ },
+ {
   "file": "songs/SleazyWorld%20Go%20-%20Off%20the%20Court%20(ft.%20Polo%20G).mp3",
   "title": "Off the Court (ft. Polo G)",
   "artist": "SleazyWorld Go"
@@ -329,6 +349,11 @@ window.SONGS=[
   "file": "songs/Waka%20Flocka%20Flame%20-%20Hard%20in%20da%20Paint%20(ft.%20Ciara).mp3",
   "title": "Hard in da Paint (ft. Ciara)",
   "artist": "Waka Flocka Flame"
+ },
+ {
+  "file": "songs/Young%20MC%20-%20Bust%20A%20Move.mp3",
+  "title": "Bust A Move",
+  "artist": "Young MC"
  },
  {
   "file": "songs/Young%20Money%20-%20Trophies%20(ft.%20Drake).mp3",
