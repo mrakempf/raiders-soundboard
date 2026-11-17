@@ -721,7 +721,11 @@ async function saveFiles(){
 addEventListener('online',saveOffline);
 if(HOSTED&&'serviceWorker' in navigator){
   const hadController=!!navigator.serviceWorker.controller;
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
+  /* updateViaCache:'none' so update checks skip the browser cache (GitHub Pages lets files be cached 10 minutes),
+     and check again whenever the app comes back to the screen, since a home-screen app may stay open for days. */
+  navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(reg=>{
+    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&navigator.onLine)reg.update().catch(()=>{})});
+  }).catch(()=>{});
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadController)toast('An update is ready.','Refresh',()=>location.reload())});
 }
 
