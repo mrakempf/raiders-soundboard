@@ -36,6 +36,16 @@ window.PADS=[
   "cat": "intro"
  },
  {
+  "file": "clips/intro-turn-the-lights-off-levels-calling-mashup.mp3",
+  "label": "Turn The Lights Off / Levels / Calling",
+  "cat": "intro"
+ },
+ {
+  "file": "clips/intro-intro-we-ready.mp3",
+  "label": "We Ready",
+  "cat": "intro"
+ },
+ {
   "file": "clips/timeout-timeout-all-of-the-lights-sicko-mode-remix.mp3",
   "label": "All of the Lights / Sicko Mode Remix",
   "cat": "timeout"
@@ -313,11 +323,6 @@ window.PADS=[
  {
   "file": "clips/music-3-dr-dre-still-dre-instrumental-long.mp3",
   "label": "Still D.R.E. (instrumental)",
-  "cat": "music"
- },
- {
-  "file": "clips/music-turn-the-lights-off-levels-calling-mashup.mp3",
-  "label": "Turn The Lights Off / Levels / Calling",
   "cat": "music"
  },
  {

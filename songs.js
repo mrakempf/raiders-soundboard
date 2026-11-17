@@ -21,6 +21,11 @@ window.SONGS=[
   "artist": ""
  },
  {
+  "file": "songs/Archie%20Eversole%20-%20We%20Ready.mp3",
+  "title": "We Ready",
+  "artist": "Archie Eversole"
+ },
+ {
   "file": "songs/Beastie%20Boys%20-%20No%20Sleep%20Till%20Brooklyn.mp3",
   "title": "No Sleep Till Brooklyn",
   "artist": "Beastie Boys"

@@ -1,4 +1,4 @@
-// Build: d31e72853a (written by tools/build-raiders.js)
+// Build: e9828aae27 (written by tools/build-raiders.js)
 // Offline support. App files live in a cache named for the build version; clips and songs live in
 // one media cache that the page fills (with a progress count) and that survives app updates.
 importScripts('precache.js');
