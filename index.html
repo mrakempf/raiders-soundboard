@@ -198,6 +198,33 @@ button.now:hover strong{color:var(--gold-hi)}
 .btn:hover{border-color:var(--muted)}
 .btn.gold{background:var(--gold);color:var(--gold-ink);border-color:transparent}
 .txt{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--fg)}
+/* playlists: All songs plus team and personal lists, picked from a row of chips */
+.pl-lists{display:flex;gap:8px;overflow-x:auto;padding:16px 0 4px;scrollbar-width:none}
+.pl-lists::-webkit-scrollbar{display:none}
+.pl-chip{flex:none;display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:8px 14px;font-weight:700;white-space:nowrap}
+.pl-chip b{font-family:var(--f-mono);font-size:.7rem;color:var(--muted);font-weight:400}
+.pl-chip i{font-style:normal;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+.pl-chip .q{width:7px;height:7px;border-radius:50%;background:var(--gold);flex:none}
+.pl-chip[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink);border-color:transparent}
+.pl-chip[aria-pressed="true"] b,.pl-chip[aria-pressed="true"] i{color:var(--gold-ink)}
+.pl-chip[aria-pressed="true"] .q{background:var(--gold-ink)}
+.pl-chip.add{border-style:dashed;color:var(--muted);background:transparent}
+.pl-chip.add:hover{color:var(--fg);border-color:var(--muted)}
+.pl-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pl-bar:empty{display:none}
+.pl-bar .note{color:var(--muted);font-size:.86rem;flex-basis:100%;margin:0}
+.pl-bar .txt{flex:1 1 220px}
+.btn.danger:hover{border-color:var(--stop);color:var(--stop)}
+.btn svg.i{width:16px;height:16px}
+.adding{border:1px solid var(--gold);background:color-mix(in srgb,var(--gold) 9%,transparent);border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;flex-basis:100%}
+.adding p{margin:0;flex:1;min-width:12em}
+.adding b{color:var(--gold)}
+.list .tg,.list .mv{width:44px;height:44px;border:0;background:transparent;color:var(--muted);flex:none;font-size:1.2rem;line-height:1}
+.list .mv{width:38px;font-size:1rem}
+.list .tg:hover,.list .mv:hover{color:var(--fg)}
+.list .mv:disabled{opacity:.25;cursor:default}
+.list .tg[aria-pressed="true"]{color:var(--gold)}
+textarea.txt{min-height:64px;font-family:var(--f-mono);font-size:.78rem;resize:vertical;word-break:break-all}
 .check{display:flex;gap:10px;align-items:flex-start}
 .check input{accent-color:var(--gold);width:18px;height:18px;margin-top:2px}
 
@@ -250,7 +277,7 @@ button.now:hover strong{color:var(--gold-hi)}
   <div class="pl-head">
     <div class="wrap pl-head-in">
       <button class="btn" id="collapse" type="button"><svg class="i"><use href="#i-down"/></svg>Soundboard</button>
-      <h2>Practice Playlist</h2>
+      <h2>Playlists</h2>
       <span class="label" id="pl-count"></span>
     </div>
   </div>
@@ -279,6 +306,32 @@ button.now:hover strong{color:var(--gold-hi)}
     </div>
 
     <div class="pl-full" id="pl-full">
+      <div class="pl-lists" id="pl-lists" role="group" aria-label="Playlists"></div>
+      <div class="pl-bar" id="pl-bar"></div>
+      <div class="box" id="pl-new" hidden>
+        <h3>New playlist</h3>
+        <div class="row">
+          <input class="txt" id="new-name" type="text" maxlength="40" placeholder="Name, like Pregame Warmups" aria-label="Playlist name" enterkeyhint="done">
+          <button class="btn gold" id="new-make" type="button">Create</button>
+        </div>
+        <p>Got a playlist from someone else? Paste the code they sent you.</p>
+        <div class="row">
+          <input class="txt" id="new-code" type="text" placeholder="Paste a share code" aria-label="Playlist share code" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <button class="btn" id="new-import" type="button">Add it</button>
+        </div>
+        <div class="row"><button class="btn" id="new-cancel" type="button">Cancel</button></div>
+      </div>
+      <div class="box" id="pl-share" hidden>
+        <h3 id="share-h">Share this playlist</h3>
+        <p>Send this to a coach. In their Raiders app they open Playlist, tap <b>+ New</b> and paste it. To put it on every phone as a team playlist, send it to whoever runs this app.</p>
+        <textarea class="txt" id="share-text" readonly aria-label="Share code"></textarea>
+        <p id="share-note" hidden></p>
+        <div class="row">
+          <button class="btn gold" id="share-send" type="button">Share…</button>
+          <button class="btn" id="share-copy" type="button">Copy</button>
+          <button class="btn" id="share-close" type="button">Close</button>
+        </div>
+      </div>
       <div class="pl-tools">
         <input class="txt" id="song-q" type="search" placeholder="Find a song or artist" aria-label="Find a song or artist">
         <select id="song-sort" aria-label="Sort songs">
@@ -318,6 +371,7 @@ button.now:hover strong{color:var(--gold-hi)}
 
 <script src="clips.js"></script>
 <script src="songs.js"></script>
+<script src="playlists.js"></script>
 <script>
 const $=s=>document.querySelector(s);
 const store={
@@ -459,10 +513,15 @@ let library=[],order=[],pos=0,fails=0,loadSeq=0;
 const byId=id=>library.find(s=>s.id===id);
 const cur=()=>byId(order[pos]);
 
+/* order: the play queue, built from the playlist that is playing (queue). A song that keeps playing
+   while you switch or edit lists stays in the queue until it ends. */
 function buildOrder(keepId){
-  const ids=library.map(s=>s.id);
+  const list=listSongs(queue),ids=list.slice();
   if(music.shuffle){for(let i=ids.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ids[i],ids[j]]=[ids[j],ids[i]]}}
-  if(keepId&&ids.includes(keepId)){ids.splice(ids.indexOf(keepId),1);music.shuffle?ids.unshift(keepId):ids.splice(library.findIndex(s=>s.id===keepId),0,keepId)}
+  if(keepId&&byId(keepId)){
+    const i=ids.indexOf(keepId);if(i>=0)ids.splice(i,1);
+    if(music.shuffle)ids.unshift(keepId);else ids.splice(Math.max(0,list.indexOf(keepId)),0,keepId);
+  }
   order=ids;pos=Math.max(0,order.indexOf(keepId));
 }
 const songUrls=new Map();
@@ -486,7 +545,7 @@ async function loadTrack(i,autoplay){
 }
 audio.addEventListener('ended',()=>eng.next(true));
 audio.addEventListener('playing',()=>{fails=0});
-audio.addEventListener('error',()=>{if(!audio.getAttribute('src'))return;fails++;if(fails<library.length){toast('Skipped a song that would not play');eng.next(true)}else toast('None of the songs would play.')});
+audio.addEventListener('error',()=>{if(!audio.getAttribute('src'))return;fails++;if(fails<order.length){toast('Skipped a song that would not play');eng.next(true)}else toast('None of the songs would play.')});
 ['play','pause'].forEach(t=>audio.addEventListener(t,()=>{paintPlay();wake(!audio.paused);if(full)paintList()}));
 
 /* YouTube: its own player, which has to stay visible on screen (YouTube's rule) */
@@ -508,14 +567,14 @@ const eng={
   playing(){return isYT()?ytReady&&yt.getPlayerState()===1:!audio.paused},
   play(){
     if(isYT()){ytReady&&yt.playVideo();return}
-    if(!library.length){openLib();return}
+    if(!order.length){openLib();if(library.length)toast(listById(queue).name+' has no songs yet.');return}
     ac();
     if(!audio.getAttribute('src')&&!audio.currentSrc)loadTrack(pos,true);else audio.play().catch(()=>{});
   },
   pause(){isYT()?ytReady&&yt.pauseVideo():audio.pause()},
   toggle(){this.playing()?this.pause():this.play()},
-  next(){if(isYT()){ytReady&&yt.nextVideo();return}if(library.length)loadTrack(pos+1,true)},
-  prev(){if(isYT()){ytReady&&yt.previousVideo();return}if(audio.currentTime>4){audio.currentTime=0;return}if(library.length)loadTrack(pos-1,true)},
+  next(){if(isYT()){ytReady&&yt.nextVideo();return}if(order.length)loadTrack(pos+1,true)},
+  prev(){if(isYT()){ytReady&&yt.previousVideo();return}if(audio.currentTime>4){audio.currentTime=0;return}if(order.length)loadTrack(pos-1,true)},
   time(){if(isYT())return ytReady?[yt.getCurrentTime()||0,yt.getDuration()||0]:[0,0];return[audio.currentTime||0,audio.duration||0]},
   seek(f){const [,d]=this.time();if(!d)return;isYT()?yt.seekTo(f*d,true):audio.currentTime=f*d},
   info(){
@@ -545,7 +604,7 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 /* lock screen and headphone controls */
 function setMeta(){
   if(!('mediaSession' in navigator))return;const i=eng.info();if(!i)return;
-  try{navigator.mediaSession.metadata=new MediaMetadata({title:i.title,artist:i.artist||'Decatur Raiders',album:'Raiders practice playlist',artwork:[{src:'raiders-icon-512.png',sizes:'512x512',type:'image/png'}]})}catch{}
+  try{navigator.mediaSession.metadata=new MediaMetadata({title:i.title,artist:i.artist||'Decatur Raiders',album:isYT()?'YouTube playlist':'Raiders · '+listById(queue).name,artwork:[{src:'raiders-icon-512.png',sizes:'512x512',type:'image/png'}]})}catch{}
 }
 if('mediaSession' in navigator){
   const ms=navigator.mediaSession,set=(a,f)=>{try{ms.setActionHandler(a,f)}catch{}};
@@ -561,9 +620,10 @@ function paintPlay(){
 }
 function paintNow(){
   const i=eng.info();
-  $('#kick').textContent=isYT()?'YouTube playlist · needs internet':library.length?'Practice playlist · '+(pos+1)+' of '+order.length:'Practice playlist';
-  $('#now-title').textContent=i?i.title:'No songs yet';
-  $('#now-artist').textContent=i?(i.artist||' '):'Tap Playlist to add your songs';
+  const ln=queue==='all'?'All songs':listById(queue).name;
+  $('#kick').textContent=isYT()?'YouTube playlist · needs internet':order.length?ln+' · '+(pos+1)+' of '+order.length:ln;
+  $('#now-title').textContent=i?i.title:library.length?'No songs in this playlist':'No songs yet';
+  $('#now-artist').textContent=i?(i.artist||' '):library.length?'Tap Playlist to add some':'Tap Playlist to add your songs';
   $('#ytbox').hidden=!isYT();$('#art').classList.toggle('yt-on',isYT());
   $('#shuf').setAttribute('aria-pressed',music.shuffle);
 }
@@ -622,24 +682,182 @@ function paintSeg(){
   $('#files-pane').hidden=pane==='yt';$('#yt-pane').hidden=pane!=='yt';
   $('#yt-link').value=music.yt?'https://www.youtube.com/playlist?list='+music.yt:'';
 }
+/* ---------- playlists ----------
+   All songs: the whole library. Team playlists: published with the app (tools/raiders-playlists.json).
+   My playlists: made on this device and kept here. A share code carries a playlist to another phone. */
+const ALL={id:'all',name:'All songs'};
+const TEAM=(window.PLAYLISTS||[]).map(p=>({id:'t:'+p.name,name:p.name,songs:p.songs.map(f=>'f:'+f),team:true}));
+let myLists=store.get('rd-lists',[]).filter(l=>l&&l.id&&Array.isArray(l.songs));
+const saveLists=()=>store.set('rd-lists',myLists);
+const listById=id=>id==='all'?ALL:TEAM.find(l=>l.id===id)||myLists.find(l=>l.id===id)||ALL;
+const listSongs=id=>id==='all'?library.map(s=>s.id):listById(id).songs.filter(x=>byId(x));
+let view=listById(store.get('rd-view','all')).id;   /* the list on screen */
+let queue=listById(store.get('rd-queue','all')).id; /* the list that is playing */
+let editing=false,adding=null;                        /* adding: id of the list being filled from All songs */
+function setView(id){view=id;editing=false;if(id!=='all')adding=null;store.set('rd-view',id);$('#song-q').value='';closePanels();paintList();$('#pl-full').scrollTop=0}
+function playList(id,songId){
+  if(isYT())setSource('files');
+  queue=id;store.set('rd-queue',id);buildOrder(songId||null);
+  if(!order.length){toast(listById(id).name+' has no songs yet.');paintNow();paintList();return}
+  ac();loadTrack(songId?pos:0,true);
+}
+/* keep the playing queue in step when the list that is playing changes */
+function listChanged(id){
+  if(id!==queue||isYT())return paintList();
+  const c=order[pos];
+  if(music.shuffle){
+    const want=listSongs(id),keep=new Set(want);
+    order=order.filter(x=>keep.has(x)||x===c);for(const x of want)if(!order.includes(x))order.push(x);
+    pos=Math.max(0,order.indexOf(c));
+  }else buildOrder(c);
+  paintNow();paintList();
+}
+function makeList(name,songs){
+  const l={id:'m:'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),name:name.trim().slice(0,40)||'My playlist',songs:songs||[]};
+  myLists.push(l);saveLists();return l;
+}
+function toggleSong(l,id){
+  const i=l.songs.indexOf(id);if(i>=0)l.songs.splice(i,1);else l.songs.push(id);
+  saveLists();listChanged(l.id);return i<0;
+}
+
+/* share codes: RP1.<name>.<song keys>, short enough to text. Song keys come from the file name. */
+const h36=s=>{let h=2166136261;for(const c of s){h^=c.codePointAt(0);h=Math.imul(h,16777619)}return(h>>>0).toString(36)};
+const b64e=s=>btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const b64d=s=>new TextDecoder().decode(Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0)));
+function shareCode(l){
+  const songs=l.songs.map(byId).filter(Boolean),files=songs.filter(s=>s.file);
+  return{code:'RP1.'+b64e(l.name)+'.'+files.map(s=>h36(s.file)).join('-'),skipped:songs.length-files.length};
+}
+function readCode(text){
+  const m=/RP1\.([\w-]+)\.([\w-]*)/.exec(text||'');if(!m)return null;
+  let name;try{name=b64d(m[1])}catch{return null}
+  const key=new Map(library.filter(s=>s.file).map(s=>[h36(s.file),s.id]));
+  const keys=m[2]?m[2].split('-'):[],songs=keys.map(k=>key.get(k)).filter(Boolean);
+  return{name,songs,missing:keys.length-songs.length};
+}
+
+function closePanels(){$('#pl-new').hidden=true;$('#pl-share').hidden=true}
+function paintLists(){
+  const box=$('#pl-lists');box.innerHTML='';
+  const chip=(id,name,n,tag)=>{
+    const b=document.createElement('button');b.type='button';b.className='pl-chip';b.dataset.id=id;b.setAttribute('aria-pressed',id===view);
+    if(id===queue&&!isYT()&&order.length){const q=document.createElement('span');q.className='q';q.title='Playing';b.appendChild(q)}
+    b.append(name);
+    if(tag){const t=document.createElement('i');t.textContent=tag;b.appendChild(t)}
+    const c=document.createElement('b');c.textContent=n;b.appendChild(c);box.appendChild(b);
+  };
+  chip('all','All songs',library.length);
+  TEAM.forEach(l=>chip(l.id,l.name,listSongs(l.id).length,'Team'));
+  myLists.forEach(l=>chip(l.id,l.name,listSongs(l.id).length));
+  const add=document.createElement('button');add.type='button';add.className='pl-chip add';add.id='pl-add';add.textContent='+ New';box.appendChild(add);
+  /* bring the selected chip into view sideways only, so the song list never jumps */
+  const on=box.querySelector('[aria-pressed="true"]');if(on&&(on.offsetLeft<box.scrollLeft||on.offsetLeft+on.offsetWidth>box.scrollLeft+box.clientWidth))box.scrollLeft=on.offsetLeft-16;
+}
+function btn(label,fn,cls){const b=document.createElement('button');b.type='button';b.className='btn'+(cls?' '+cls:'');b.textContent=label;b.addEventListener('click',fn);return b}
+function paintBar(){
+  const bar=$('#pl-bar');bar.innerHTML='';const l=listById(view),n=listSongs(view).length;
+  if(view==='all'){
+    if(adding){
+      const a=listById(adding),d=document.createElement('div');d.className='adding';
+      d.innerHTML='<p>Adding songs to <b></b>. Tap <b>＋</b> next to a song to add it, tap <b>✓</b> to take it out.</p>';
+      d.querySelector('b').textContent=a.name;
+      d.appendChild(btn('Done',()=>{const id=adding;adding=null;setView(id)},'gold'));bar.appendChild(d);
+    }else bar.appendChild(btn('▶ Play all songs',()=>playList('all'),'gold'));
+    return;
+  }
+  if(editing){
+    const name=document.createElement('input');name.className='txt';name.value=l.name;name.maxLength=40;name.setAttribute('aria-label','Playlist name');
+    name.addEventListener('change',()=>{l.name=name.value.trim()||l.name;saveLists();paintLists();paintNow()});
+    bar.append(name,btn('Done',()=>{editing=false;paintList()},'gold'),
+      btn('Delete playlist',()=>{
+        if(!confirm('Delete the playlist “'+l.name+'”? The songs stay in All songs.'))return;
+        myLists=myLists.filter(x=>x!==l);saveLists();
+        if(queue===l.id){queue='all';store.set('rd-queue','all');buildOrder(order[pos])}
+        setView('all');paintNow();toast('Playlist deleted');
+      },'danger'));
+    const p=document.createElement('p');p.className='note';p.textContent='Use ↑ ↓ to change the order and ✕ to take a song out. Turn shuffle off to play it in this order.';bar.appendChild(p);
+    return;
+  }
+  if(n)bar.appendChild(btn('▶ Play',()=>playList(view),'gold'));
+  if(l.team){
+    bar.appendChild(btn('Make my own copy',()=>{const c=makeList(l.name+' (my copy)',l.songs.slice());setView(c.id);toast('Copied. You can change this one.')}));
+  }else{
+    bar.appendChild(btn('Add songs',()=>{adding=l.id;setView('all')},n?'':'gold'));
+    if(n)bar.appendChild(btn('Edit',()=>{editing=true;paintList()}));
+  }
+  if(n)bar.appendChild(btn('Share',()=>openShare(l)));
+  if(l.team){const p=document.createElement('p');p.className='note';p.textContent='Team playlist: it comes with the app on every phone.';bar.appendChild(p)}
+  else if(!n){const p=document.createElement('p');p.className='note';p.textContent='This playlist is empty. Tap Add songs to fill it.';bar.appendChild(p)}
+}
+function openShare(l){
+  closePanels();const {code,skipped}=shareCode(l);
+  $('#share-h').textContent='Share “'+l.name+'”';
+  $('#share-text').value='Raiders playlist “'+l.name+'”. In the Raiders app open Playlist, tap + New and paste this code: '+code;
+  const note=$('#share-note');note.hidden=!skipped;note.textContent=skipped?skipped+(skipped===1?' song was':' songs were')+' added on this device only, so the code leaves '+(skipped===1?'it':'them')+' out.':'';
+  $('#share-send').hidden=!navigator.share;
+  $('#pl-share').hidden=false;$('#pl-share').scrollIntoView({block:'nearest'});
+}
+$('#pl-lists').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.id==='pl-add'){closePanels();$('#pl-new').hidden=false;$('#new-name').value='';$('#new-code').value='';$('#new-name').focus();return}
+  setView(b.dataset.id);
+});
+$('#new-cancel').addEventListener('click',closePanels);
+$('#new-make').addEventListener('click',()=>{
+  const name=$('#new-name').value.trim();if(!name){$('#new-name').focus();toast('Give the playlist a name first.');return}
+  const l=makeList(name);adding=l.id;setView('all');toast('Created. Now tap ＋ next to each song.');
+});
+$('#new-name').addEventListener('keydown',e=>{if(e.key==='Enter')$('#new-make').click()});
+$('#new-import').addEventListener('click',()=>{
+  const r=readCode($('#new-code').value);
+  if(!r){toast('That is not a playlist code. Copy the whole message and paste it again.');return}
+  const l=makeList(r.name,r.songs);setView(l.id);
+  toast(r.missing?'Added “'+l.name+'”. '+r.missing+' song'+(r.missing===1?' is':'s are')+' not on this phone yet: update the app.':'Added “'+l.name+'” with '+r.songs.length+' songs.');
+});
+$('#share-close').addEventListener('click',closePanels);
+$('#share-copy').addEventListener('click',async()=>{
+  const t=$('#share-text');
+  try{await navigator.clipboard.writeText(t.value);toast('Copied. Paste it into a text or email.')}
+  catch{t.focus();t.select();toast('Press and hold the code to copy it.')}
+});
+$('#share-send').addEventListener('click',()=>{navigator.share({title:'Raiders playlist',text:$('#share-text').value}).catch(()=>{})});
+
 function paintList(scrollToCurrent){
+  paintLists();paintBar();
   const ol=$('#song-list');ol.innerHTML='';
-  $('#pl-count').textContent=library.length?library.length+' songs':'';
-  if(!library.length){const li=document.createElement('li');li.innerHTML='<span class="pick" style="color:var(--muted)">No songs saved yet. Add some below.</span>';ol.appendChild(li);return}
-  const q=$('#song-q').value.trim().toLowerCase(),sort=sortEl.value,curId=isYT()?null:order[pos];
-  const by=k=>(a,b)=>((byId(a)[k]||'\uffff').localeCompare(byId(b)[k]||'\uffff',undefined,{sensitivity:'base'}))||byId(a).title.localeCompare(byId(b).title);
-  let ids=order.slice();
+  const l=listById(view),base=listSongs(view),inQueue=view===queue&&!isYT();
+  $('#pl-count').textContent=base.length?base.length+' songs':'';
+  $('#pl-full .pl-tools').hidden=editing;
+  const empty=t=>{const li=document.createElement('li');li.innerHTML='<span class="pick" style="color:var(--muted)"></span>';li.firstChild.textContent=t;ol.appendChild(li)};
+  if(!library.length)return empty('No songs saved yet. Add some below.');
+  if(!base.length)return empty(l.team?'None of these songs are on this phone yet.':'No songs in this playlist yet.');
+  const q=editing?'':$('#song-q').value.trim().toLowerCase(),sort=editing?'order':sortEl.value,curId=isYT()?null:order[pos];
+  const by=k=>(a,b)=>((byId(a)[k]||'￿').localeCompare(byId(b)[k]||'￿',undefined,{sensitivity:'base'}))||byId(a).title.localeCompare(byId(b).title);
+  /* Play order: the queue as it will play (shuffled or not) when this list is playing, otherwise the list's own order */
+  let ids=sort==='order'&&inQueue&&!editing?order.filter(id=>base.includes(id)):base.slice();
   if(sort==='title')ids.sort(by('title'));else if(sort==='artist')ids.sort(by('artist'));
   if(q)ids=ids.filter(id=>{const s=byId(id);return(s.title+' '+s.artist).toLowerCase().includes(q)});
-  if(!ids.length){const li=document.createElement('li');li.innerHTML='<span class="pick" style="color:var(--muted)"></span>';li.firstChild.textContent='No songs match “'+$('#song-q').value.trim()+'”.';ol.appendChild(li);return}
-  ids.forEach(id=>{
+  if(!ids.length)return empty('No songs match “'+$('#song-q').value.trim()+'”.');
+  const target=adding&&view==='all'?listById(adding):null;
+  ids.forEach((id,i)=>{
     const s=byId(id),li=document.createElement('li');if(id===curId)li.className='cur';
     li.innerHTML='<button type="button" class="pick"><span class="n"></span><span class="t"><b></b><span></span></span></button>';
-    li.querySelector('.n').textContent=id===curId?(audio.paused?'❚❚':'▶'):sort==='order'?order.indexOf(id)+1:'';
-    li.querySelector('b').textContent=s.title;li.querySelector('.t span').textContent=s.artist||(s.blob?'Saved on this device':'\u00a0');
+    li.querySelector('.n').textContent=id===curId?(audio.paused?'❚❚':'▶'):sort==='order'?i+1:'';
+    li.querySelector('b').textContent=s.title;li.querySelector('.t span').textContent=s.artist||(s.blob?'Saved on this device':' ');
     li.querySelector('.pick').setAttribute('aria-label','Play '+s.title+(s.artist?' by '+s.artist:''));
-    li.querySelector('.pick').addEventListener('click',()=>{if(isYT())setSource('files');ac();loadTrack(order.indexOf(id),true)});
-    if(s.blob){const r=document.createElement('button');r.type='button';r.className='rm';r.textContent='✕';r.setAttribute('aria-label','Remove '+s.title);r.addEventListener('click',()=>removeSong(s));li.appendChild(r)}
+    li.querySelector('.pick').addEventListener('click',()=>playList(view,id));
+    const add=(text,cls,label,fn,dis)=>{const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=text;b.setAttribute('aria-label',label);if(dis)b.disabled=true;b.addEventListener('click',fn);li.appendChild(b);return b};
+    if(editing){
+      const move=d=>{const a=l.songs.indexOf(id),b=l.songs.indexOf(ids[i+d]);[l.songs[a],l.songs[b]]=[l.songs[b],l.songs[a]];saveLists();listChanged(l.id)};
+      add('↑','mv','Move '+s.title+' up',()=>move(-1),i===0);
+      add('↓','mv','Move '+s.title+' down',()=>move(1),i===ids.length-1);
+      add('✕','rm','Take '+s.title+' out of this playlist',()=>{l.songs.splice(l.songs.indexOf(id),1);saveLists();listChanged(l.id)});
+    }else if(target){
+      const on=target.songs.includes(id),b=add(on?'✓':'＋','tg',(on?'Take ':'Add ')+s.title+(on?' out of ':' to ')+target.name,()=>{
+        const now=toggleSong(target,id);b.textContent=now?'✓':'＋';b.setAttribute('aria-pressed',now);
+      });b.setAttribute('aria-pressed',on);
+    }else if(s.blob&&view==='all')add('✕','rm','Remove '+s.title,()=>removeSong(s));
     ol.appendChild(li);
   });
   if(scrollToCurrent){const c=ol.querySelector('.cur');if(c)c.scrollIntoView({block:'center'})}
@@ -685,6 +903,7 @@ async function removeSong(s){
   try{await idbTx(st=>st.delete(s.id))}catch{}
   const wasCur=order[pos]===s.id,wasPlaying=!audio.paused;
   library=library.filter(x=>x!==s);const i=order.indexOf(s.id);order.splice(i,1);if(i<pos)pos--;
+  myLists.forEach(l=>{l.songs=l.songs.filter(x=>x!==s.id)});saveLists();
   songUrls.delete(s.id);
   if(wasCur){audio.pause();audio.removeAttribute('src');if(order.length)loadTrack(Math.min(pos,order.length-1),wasPlaying)}
   paintList();paintNow();paintPlay();
@@ -755,7 +974,7 @@ render();
   buildOrder(byId(last)?last:null);
   if(isYT()&&music.yt&&navigator.onLine)startYT();else if(isYT()){music.src='files'}
   paintNow();paintPlay();applyVol(true);
-  if(library.length&&!isYT())loadTrack(pos,false);
+  if(order.length&&!isYT())loadTrack(pos,false);
   await preloadPads();
   saveOffline();
 })();
