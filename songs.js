@@ -16,6 +16,36 @@ window.SONGS=[
   "artist": "300 Violin Orchestra x Drake"
  },
  {
+  "file": "songs/AC%E2%88%95DC%20-%20Back%20in%20Black.mp3",
+  "title": "Back in Black",
+  "artist": "AC∕DC"
+ },
+ {
+  "file": "songs/AC%E2%88%95DC%20-%20Highway%20to%20Hell.mp3",
+  "title": "Highway to Hell",
+  "artist": "AC∕DC"
+ },
+ {
+  "file": "songs/AC%E2%88%95DC%20-%20Shoot%20to%20Thrill.mp3",
+  "title": "Shoot to Thrill",
+  "artist": "AC∕DC"
+ },
+ {
+  "file": "songs/AC%E2%88%95DC%20-%20T.N.T..mp3",
+  "title": "T.N.T.",
+  "artist": "AC∕DC"
+ },
+ {
+  "file": "songs/AC%E2%88%95DC%20-%20Thunderstruck.mp3",
+  "title": "Thunderstruck",
+  "artist": "AC∕DC"
+ },
+ {
+  "file": "songs/AC%E2%88%95DC%20-%20You%20Shook%20Me%20All%20Night%20Long.mp3",
+  "title": "You Shook Me All Night Long",
+  "artist": "AC∕DC"
+ },
+ {
   "file": "songs/Amazing.mp3",
   "title": "Amazing",
   "artist": ""
@@ -41,9 +71,39 @@ window.SONGS=[
   "artist": "BigXthaPlug"
  },
  {
+  "file": "songs/Billy%20Idol%20-%20Rebel%20Yell.mp3",
+  "title": "Rebel Yell",
+  "artist": "Billy Idol"
+ },
+ {
+  "file": "songs/Black%20Sabbath%20-%20War%20Pigs.mp3",
+  "title": "War Pigs",
+  "artist": "Black Sabbath"
+ },
+ {
   "file": "songs/BlockBoy%20JB%20-%20Look%20Alive%20(ft.%20Drake).mp3",
   "title": "Look Alive (ft. Drake)",
   "artist": "BlockBoy JB"
+ },
+ {
+  "file": "songs/Bon%20Jovi%20-%20It's%20My%20Life.mp3",
+  "title": "It's My Life",
+  "artist": "Bon Jovi"
+ },
+ {
+  "file": "songs/Bon%20Jovi%20-%20Livin'%20on%20a%20Prayer.mp3",
+  "title": "Livin' on a Prayer",
+  "artist": "Bon Jovi"
+ },
+ {
+  "file": "songs/Bon%20Jovi%20-%20Wanted%20Dead%20or%20Alive.mp3",
+  "title": "Wanted Dead or Alive",
+  "artist": "Bon Jovi"
+ },
+ {
+  "file": "songs/Bon%20Jovi%20-%20You%20Give%20Love%20a%20Bad%20Name.mp3",
+  "title": "You Give Love a Bad Name",
+  "artist": "Bon Jovi"
  },
  {
   "file": "songs/Chance%20the%20Rapper%20-%20No%20Problem%20(ft.%20Lil%20Wayne%20%26%202%20Chainz).mp3",
@@ -76,9 +136,19 @@ window.SONGS=[
   "artist": "Creed"
  },
  {
+  "file": "songs/Creedence%20Clearwater%20Revival%20-%20Proud%20Mary.mp3",
+  "title": "Proud Mary",
+  "artist": "Creedence Clearwater Revival"
+ },
+ {
   "file": "songs/DaBaby%20-%20Rockstar%20(ft.%20Roddy%20Ricch).mp3",
   "title": "Rockstar (ft. Roddy Ricch)",
   "artist": "DaBaby"
+ },
+ {
+  "file": "songs/Def%20Leppard%20-%20Pour%20Some%20Sugar%20on%20Me.mp3",
+  "title": "Pour Some Sugar on Me",
+  "artist": "Def Leppard"
  },
  {
   "file": "songs/DMX%20-%20X%20Gon'%20Give%20It%20to%20Ya.mp3",
@@ -126,6 +196,11 @@ window.SONGS=[
   "artist": "Eminem"
  },
  {
+  "file": "songs/Europe%20-%20The%20Final%20Countdown.mp3",
+  "title": "The Final Countdown",
+  "artist": "Europe"
+ },
+ {
   "file": "songs/Fetty%20Wap%20-%20679.mp3",
   "title": "679",
   "artist": "Fetty Wap"
@@ -144,6 +219,21 @@ window.SONGS=[
   "file": "songs/G-Eazy%20-%20No%20Limit%20(ft.%20Cardi%20B%20%26%20A%24AP%20Rocky).mp3",
   "title": "No Limit (ft. Cardi B & A$AP Rocky)",
   "artist": "G-Eazy"
+ },
+ {
+  "file": "songs/Guns%20N'%20Roses%20-%20Paradise%20City.mp3",
+  "title": "Paradise City",
+  "artist": "Guns N' Roses"
+ },
+ {
+  "file": "songs/Guns%20N'%20Roses%20-%20Sweet%20Child%20O'%20Mine.mp3",
+  "title": "Sweet Child O' Mine",
+  "artist": "Guns N' Roses"
+ },
+ {
+  "file": "songs/Guns%20N'%20Roses%20-%20Welcome%20to%20the%20Jungle.mp3",
+  "title": "Welcome to the Jungle",
+  "artist": "Guns N' Roses"
  },
  {
   "file": "songs/J.%20Cole%20-%20Can't%20Get%20Enough%20(ft.%20Trey%20Songz).mp3",
@@ -181,6 +271,16 @@ window.SONGS=[
   "artist": "Jerreau"
  },
  {
+  "file": "songs/Journey%20-%20Any%20Way%20You%20Want%20It.mp3",
+  "title": "Any Way You Want It",
+  "artist": "Journey"
+ },
+ {
+  "file": "songs/Kansas%20-%20Carry%20On%20Wayward%20Son.mp3",
+  "title": "Carry On Wayward Son",
+  "artist": "Kansas"
+ },
+ {
   "file": "songs/Kanye%20West%20-%20All%20of%20the%20Lights%20(ft.%20Rihanna%20%26%20Kid%20Cudi).mp3",
   "title": "All of the Lights (ft. Rihanna & Kid Cudi)",
   "artist": "Kanye West"
@@ -211,6 +311,11 @@ window.SONGS=[
   "artist": "Kid Cudi"
  },
  {
+  "file": "songs/Kiss%20-%20Rock%20and%20Roll%20All%20Nite.mp3",
+  "title": "Rock and Roll All Nite",
+  "artist": "Kiss"
+ },
+ {
   "file": "songs/Kris%20Kross%20-%20Jump.mp3",
   "title": "Jump",
   "artist": "Kris Kross"
@@ -229,6 +334,16 @@ window.SONGS=[
   "file": "songs/Lil%20Wayne%20-%20Kobe%20Bryant.mp3",
   "title": "Kobe Bryant",
   "artist": "Lil Wayne"
+ },
+ {
+  "file": "songs/Linkin%20Park%20-%20In%20the%20End.mp3",
+  "title": "In the End",
+  "artist": "Linkin Park"
+ },
+ {
+  "file": "songs/Lynyrd%20Skynyrd%20-%20Sweet%20Home%20Alabama.mp3",
+  "title": "Sweet Home Alabama",
+  "artist": "Lynyrd Skynyrd"
  },
  {
   "file": "songs/Masked%20Wolf%20-%20Astronaut%20in%20the%20Ocean%20(Remix).mp3",
@@ -254,6 +369,11 @@ window.SONGS=[
   "file": "songs/Meek%20Mill%20-%20R.I.C.O.%20(ft.%20Drake).mp3",
   "title": "R.I.C.O. (ft. Drake)",
   "artist": "Meek Mill"
+ },
+ {
+  "file": "songs/Metallica%20-%20Enter%20Sandman.mp3",
+  "title": "Enter Sandman",
+  "artist": "Metallica"
  },
  {
   "file": "songs/Metro%20Boomin%2C%20Future%20%26%20Chris%20Brown%20-%20Superhero.mp3",
@@ -286,9 +406,19 @@ window.SONGS=[
   "artist": "Mustard"
  },
  {
+  "file": "songs/Nirvana%20-%20Smells%20Like%20Teen%20Spirit.mp3",
+  "title": "Smells Like Teen Spirit",
+  "artist": "Nirvana"
+ },
+ {
   "file": "songs/NWA%20-%20Express%20Yourself.mp3",
   "title": "Express Yourself",
   "artist": "NWA"
+ },
+ {
+  "file": "songs/Ozzy%20Osbourne%20-%20Crazy%20Train.mp3",
+  "title": "Crazy Train",
+  "artist": "Ozzy Osbourne"
  },
  {
   "file": "songs/Polo%20G%20-%20Martin%20%26%20Gina.mp3",
@@ -314,6 +444,16 @@ window.SONGS=[
   "file": "songs/Quavo%20%26%20Takeoff%20-%20Hotel%20Lobby.mp3",
   "title": "Hotel Lobby",
   "artist": "Quavo & Takeoff"
+ },
+ {
+  "file": "songs/Queen%20-%20We%20Will%20Rock%20You.mp3",
+  "title": "We Will Rock You",
+  "artist": "Queen"
+ },
+ {
+  "file": "songs/Red%20Hot%20Chili%20Peppers%20-%20Can't%20Stop.mp3",
+  "title": "Can't Stop",
+  "artist": "Red Hot Chili Peppers"
  },
  {
   "file": "songs/Rod%20Wave%20-%20Heart%20on%20Ice.mp3",
@@ -346,6 +486,16 @@ window.SONGS=[
   "artist": "SleazyWorld Go"
  },
  {
+  "file": "songs/Steppenwolf%20-%20Born%20to%20Be%20Wild.mp3",
+  "title": "Born to Be Wild",
+  "artist": "Steppenwolf"
+ },
+ {
+  "file": "songs/Survivor%20-%20Eye%20of%20the%20Tiger.mp3",
+  "title": "Eye of the Tiger",
+  "artist": "Survivor"
+ },
+ {
   "file": "songs/T.I.%20-%20Bring%20Em%20Out.mp3",
   "title": "Bring Em Out",
   "artist": "T.I."
@@ -354,6 +504,11 @@ window.SONGS=[
   "file": "songs/Tee%20Grizzley%20-%20First%20Day%20Out.mp3",
   "title": "First Day Out",
   "artist": "Tee Grizzley"
+ },
+ {
+  "file": "songs/The%20Guess%20Who%20-%20American%20Woman.mp3",
+  "title": "American Woman",
+  "artist": "The Guess Who"
  },
  {
   "file": "songs/Travis%20Barker%20-%20Let's%20Go%20(ft.%20Yelawolf%2C%20Busta%20Rhymes%20%26%20Twista).mp3",
@@ -384,6 +539,11 @@ window.SONGS=[
   "file": "songs/Ty%20Dolla%20%24ign%20-%20Or%20Nah%20(ft.%20Wiz%20Khalifa%20%26%20DJ%20Mustard).mp3",
   "title": "Or Nah (ft. Wiz Khalifa & DJ Mustard)",
   "artist": "Ty Dolla $ign"
+ },
+ {
+  "file": "songs/Van%20Halen%20-%20Jump.mp3",
+  "title": "Jump",
+  "artist": "Van Halen"
  },
  {
   "file": "songs/Waka%20Flocka%20Flame%20-%20Hard%20in%20da%20Paint%20(ft.%20Ciara).mp3",

@@ -90,5 +90,43 @@ window.PLAYLISTS=[
    "songs/Young%20Money%20-%20Trophies%20(ft.%20Drake).mp3",
    "songs/Young%20Thug%20-%20Digits.mp3"
   ]
+ },
+ {
+  "name": "Rock",
+  "songs": [
+   "songs/AC%E2%88%95DC%20-%20Highway%20to%20Hell.mp3",
+   "songs/Metallica%20-%20Enter%20Sandman.mp3",
+   "songs/Nirvana%20-%20Smells%20Like%20Teen%20Spirit.mp3",
+   "songs/Guns%20N'%20Roses%20-%20Sweet%20Child%20O'%20Mine.mp3",
+   "songs/Bon%20Jovi%20-%20You%20Give%20Love%20a%20Bad%20Name.mp3",
+   "songs/Van%20Halen%20-%20Jump.mp3",
+   "songs/Steppenwolf%20-%20Born%20to%20Be%20Wild.mp3",
+   "songs/AC%E2%88%95DC%20-%20Back%20in%20Black.mp3",
+   "songs/Guns%20N'%20Roses%20-%20Welcome%20to%20the%20Jungle.mp3",
+   "songs/Def%20Leppard%20-%20Pour%20Some%20Sugar%20on%20Me.mp3",
+   "songs/AC%E2%88%95DC%20-%20Thunderstruck.mp3",
+   "songs/Europe%20-%20The%20Final%20Countdown.mp3",
+   "songs/Bon%20Jovi%20-%20Wanted%20Dead%20or%20Alive.mp3",
+   "songs/Guns%20N'%20Roses%20-%20Paradise%20City.mp3",
+   "songs/Survivor%20-%20Eye%20of%20the%20Tiger.mp3",
+   "songs/Bon%20Jovi%20-%20It's%20My%20Life.mp3",
+   "songs/Journey%20-%20Any%20Way%20You%20Want%20It.mp3",
+   "songs/Ozzy%20Osbourne%20-%20Crazy%20Train.mp3",
+   "songs/Creedence%20Clearwater%20Revival%20-%20Proud%20Mary.mp3",
+   "songs/Run-D.M.C.%20ft.%20Aerosmith%20-%20Walk%20This%20Way.mp3",
+   "songs/Bon%20Jovi%20-%20Livin'%20on%20a%20Prayer.mp3",
+   "songs/Kiss%20-%20Rock%20and%20Roll%20All%20Nite.mp3",
+   "songs/AC%E2%88%95DC%20-%20Shoot%20to%20Thrill.mp3",
+   "songs/Billy%20Idol%20-%20Rebel%20Yell.mp3",
+   "songs/AC%E2%88%95DC%20-%20You%20Shook%20Me%20All%20Night%20Long.mp3",
+   "songs/AC%E2%88%95DC%20-%20T.N.T..mp3",
+   "songs/The%20Guess%20Who%20-%20American%20Woman.mp3",
+   "songs/Queen%20-%20We%20Will%20Rock%20You.mp3",
+   "songs/Black%20Sabbath%20-%20War%20Pigs.mp3",
+   "songs/Lynyrd%20Skynyrd%20-%20Sweet%20Home%20Alabama.mp3",
+   "songs/Kansas%20-%20Carry%20On%20Wayward%20Son.mp3",
+   "songs/Linkin%20Park%20-%20In%20the%20End.mp3",
+   "songs/Red%20Hot%20Chili%20Peppers%20-%20Can't%20Stop.mp3"
+  ]
  }
 ];
