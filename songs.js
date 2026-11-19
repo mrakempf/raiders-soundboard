@@ -51,6 +51,31 @@ window.SONGS=[
   "artist": "Chance the Rapper"
  },
  {
+  "file": "songs/Country%20Night%20-%20Country%20EDM%20Summer%20Mix.mp3",
+  "title": "Country EDM Summer Mix",
+  "artist": "Country Night"
+ },
+ {
+  "file": "songs/Country%20Night%20-%20Morgan%20Wallen%20%26%20Drake%20Dance%20Remixes.mp3",
+  "title": "Morgan Wallen & Drake Dance Remixes",
+  "artist": "Country Night"
+ },
+ {
+  "file": "songs/Country%20Night%20-%20YeeDM%20Party%20Mix.mp3",
+  "title": "YeeDM Party Mix",
+  "artist": "Country Night"
+ },
+ {
+  "file": "songs/Country%20Night%20-%20YeeDM%20Sunset%20Mix.mp3",
+  "title": "YeeDM Sunset Mix",
+  "artist": "Country Night"
+ },
+ {
+  "file": "songs/Creed%20-%20One%20Last%20Breath%20(ATLiens%20Remix).mp3",
+  "title": "One Last Breath (ATLiens Remix)",
+  "artist": "Creed"
+ },
+ {
   "file": "songs/DaBaby%20-%20Rockstar%20(ft.%20Roddy%20Ricch).mp3",
   "title": "Rockstar (ft. Roddy Ricch)",
   "artist": "DaBaby"
@@ -244,6 +269,16 @@ window.SONGS=[
   "file": "songs/Miguel%20-%20Sky%20Walker.mp3",
   "title": "Sky Walker",
   "artist": "Miguel"
+ },
+ {
+  "file": "songs/MOONLGHT%20-%20Free%20Bird.mp3",
+  "title": "Free Bird",
+  "artist": "MOONLGHT"
+ },
+ {
+  "file": "songs/MOONLGHT%20-%20YeeDM%20x%20Stagecoach%20Mix%20Vol.%203.mp3",
+  "title": "YeeDM x Stagecoach Mix Vol. 3",
+  "artist": "MOONLGHT"
  },
  {
   "file": "songs/Mustard%20-%20Ballin'%20(ft.%20Roddy%20Ricch).mp3",
