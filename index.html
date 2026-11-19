@@ -225,6 +225,19 @@ button.now:hover strong{color:var(--gold-hi)}
 .list .mv:disabled{opacity:.25;cursor:default}
 .list .tg[aria-pressed="true"]{color:var(--gold)}
 textarea.txt{min-height:64px;font-family:var(--f-mono);font-size:.78rem;resize:vertical;word-break:break-all}
+/* hold a pad to move it: no text selection or phone callout menu while holding */
+.hit{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+.pad.holding .hit{transform:scale(.97);border-color:var(--c)}
+.sheet{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;padding:16px}
+.sheet-in{width:100%;max-width:420px;background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;margin-bottom:env(safe-area-inset-bottom,0px)}
+.sheet h3{margin:0 0 4px;font-size:1.05rem}
+.sheet h3 span{color:var(--gold)}
+.sheet .opt{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-weight:700}
+.sheet .opt:hover:not(:disabled){border-color:var(--c)}
+.sheet .opt i{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+.sheet .opt small{margin-left:auto;font-family:var(--f-mono);font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.sheet .opt:disabled{opacity:.6;cursor:default}
+@media (min-width:761px){.sheet{align-items:center}}
 .check{display:flex;gap:10px;align-items:flex-start}
 .check input{accent-color:var(--gold);width:18px;height:18px;margin-top:2px}
 
@@ -371,12 +384,25 @@ textarea.txt{min-height:64px;font-family:var(--f-mono);font-size:.78rem;resize:v
             <input class="txt" id="coach-code" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Coach code" aria-label="Coach code">
             <button class="btn gold" type="submit">Unlock</button>
           </form>
+          <p id="moves-msg" hidden></p>
+          <div class="row" id="moves-row" hidden>
+            <button class="btn" id="moves-send" type="button">Send pad moves</button>
+            <button class="btn danger" id="moves-undo" type="button">Put all pads back</button>
+          </div>
           <div class="row" id="coach-out" hidden><button class="btn" id="coach-lock" type="button">Lock this device</button></div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<div class="sheet" id="move-sheet" hidden>
+  <div class="sheet-in" role="dialog" aria-modal="true" aria-labelledby="move-h">
+    <h3 id="move-h">Move <span></span> to</h3>
+    <div id="move-opts" style="display:flex;flex-direction:column;gap:8px"></div>
+    <button class="btn" id="move-cancel" type="button">Cancel</button>
+  </div>
+</div>
 
 <div class="toast" id="toast" role="status" hidden><span></span><button type="button" hidden></button></div>
 
@@ -506,7 +532,45 @@ function render(){
   }
 }
 $('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;state.cat=b.dataset.cat;store.set('rd-cat',state.cat);render()});
+/* ---------- hold a pad to move it to another section (coach mode; saved on this device) ---------- */
+let padMoves=store.get('rd-pad-moves',{});
+PADS.forEach(p=>{p.home=p.cat;if(CATS.some(c=>c.id===padMoves[p.id]))p.cat=padMoves[p.id]});
+const catName=id=>(CATS.find(c=>c.id===id)||{}).name||id;
+let holdT=0,holdXY=null,held=false;
+function cancelHold(){clearTimeout(holdT);document.querySelectorAll('.pad.holding').forEach(x=>x.classList.remove('holding'))}
+$('#board').addEventListener('pointerdown',e=>{
+  held=false;const hit=e.target.closest('.hit');if(!hit||e.button>0||!canEdit())return;
+  const el=hit.closest('.pad'),p=PADS.find(x=>x.id===el.dataset.id);if(!p)return;
+  holdXY=[e.clientX,e.clientY];clearTimeout(holdT);el.classList.add('holding');
+  holdT=setTimeout(()=>{held=true;cancelHold();try{navigator.vibrate&&navigator.vibrate(15)}catch{}openMove(p)},550);
+});
+$('#board').addEventListener('pointermove',e=>{if(holdXY&&Math.hypot(e.clientX-holdXY[0],e.clientY-holdXY[1])>10)cancelHold()});
+['pointerup','pointercancel'].forEach(t=>$('#board').addEventListener(t,cancelHold));
+addEventListener('scroll',cancelHold,{passive:true});
+$('#board').addEventListener('contextmenu',e=>{if(e.target.closest('.hit'))e.preventDefault()});
+function openMove(p){
+  $('#move-h span').textContent='“'+p.label+'”';
+  const box=$('#move-opts');box.innerHTML='';
+  CATS.forEach(c=>{
+    const b=document.createElement('button');b.type='button';b.className='opt';b.style.setProperty('--c','var(--c-'+c.id+')');
+    b.innerHTML='<i></i><span></span><small></small>';b.querySelector('span').textContent=c.name;
+    b.querySelector('small').textContent=c.id===p.cat?'Here now':c.id===p.home?'Where it started':'';
+    b.disabled=c.id===p.cat;b.addEventListener('click',()=>movePad(p,c.id));box.appendChild(b);
+  });
+  $('#move-sheet').hidden=false;box.querySelector('button:not(:disabled)').focus();
+}
+function closeMove(){$('#move-sheet').hidden=true}
+function movePad(p,cat){
+  p.cat=cat;if(cat===p.home)delete padMoves[p.id];else padMoves[p.id]=cat;
+  store.set('rd-pad-moves',padMoves);closeMove();render();paintCoach();
+  toast('Moved “'+p.label+'” to '+catName(cat));
+}
+$('#move-cancel').addEventListener('click',closeMove);
+$('#move-sheet').addEventListener('click',e=>{if(e.target===e.currentTarget)closeMove()});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#move-sheet').hidden){e.stopImmediatePropagation();closeMove()}},true);
+
 $('#board').addEventListener('click',e=>{
+  if(held){held=false;return}   /* the hold opened the move menu; don't also play the pad */
   const el=e.target.closest('.pad');if(!el)return;const p=PADS.find(x=>x.id===el.dataset.id);if(!p)return;
   if(e.target.closest('.fav')){favs.has(p.id)?favs.delete(p.id):favs.add(p.id);store.set('rd-favs',[...favs]);render();return}
   playPad(p);
@@ -710,8 +774,21 @@ let coach=COACH.codes.find(c=>c.h===store.get('rd-coach',''))||null;
 const canEdit=()=>!!coach;
 function paintCoach(){
   $('#coach-only').hidden=!coach;$('#coach-in').hidden=!!coach;$('#coach-out').hidden=!coach;
-  $('#coach-msg').textContent=coach?'Coach mode is on for this device'+(coach.name?' ('+coach.name+')':'')+'. You can make and change playlists and add songs.':'Playlists are locked. Coaches: enter your code to make changes on this device.';
+  $('#coach-msg').textContent=coach?'Coach mode is on for this device'+(coach.name?' ('+coach.name+')':'')+'. You can make and change playlists, add songs, and press and hold a sound pad to move it to another section.':'Playlists are locked. Coaches: enter your code to make changes on this device.';
+  const moved=PADS.filter(p=>p.cat!==p.home).length;
+  $('#moves-msg').hidden=$('#moves-row').hidden=!coach||!moved;
+  $('#moves-msg').textContent=moved+(moved===1?' pad has':' pads have')+' been moved on this device only. Send the list to whoever runs the app to move '+(moved===1?'it':'them')+' on every phone.';
 }
+function movesText(){return 'Raiders pad moves:\n'+PADS.filter(p=>p.cat!==p.home).map(p=>'• '+p.label+': '+catName(p.home)+' → '+catName(p.cat)).join('\n')}
+$('#moves-send').addEventListener('click',async()=>{
+  const t=movesText();
+  if(navigator.share){try{await navigator.share({title:'Raiders pad moves',text:t});return}catch(e){if(e&&e.name==='AbortError')return}}
+  try{await navigator.clipboard.writeText(t);toast('Copied the list. Paste it into a text or email.')}catch{prompt('Copy this list:',t)}
+});
+$('#moves-undo').addEventListener('click',()=>{
+  if(!confirm('Put every moved pad back in its original section on this device?'))return;
+  PADS.forEach(p=>{p.cat=p.home});padMoves={};store.set('rd-pad-moves',padMoves);render();paintCoach();toast('All pads are back where they started.');
+});
 $('#coach-in').addEventListener('submit',async e=>{
   e.preventDefault();const inp=$('#coach-code'),v=inp.value;if(!v.trim())return inp.focus();
   let h='';try{h=await codeHash(v)}catch{toast('This browser cannot check codes. Open the app from its web address.');return}
