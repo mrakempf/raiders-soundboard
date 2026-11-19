@@ -116,11 +116,6 @@ window.SONGS=[
   "artist": "Country Night"
  },
  {
-  "file": "songs/Country%20Night%20-%20Morgan%20Wallen%20%26%20Drake%20Dance%20Remixes.mp3",
-  "title": "Morgan Wallen & Drake Dance Remixes",
-  "artist": "Country Night"
- },
- {
   "file": "songs/Country%20Night%20-%20YeeDM%20Party%20Mix.mp3",
   "title": "YeeDM Party Mix",
   "artist": "Country Night"

@@ -7,7 +7,6 @@ window.PLAYLISTS=[
    "songs/Creed%20-%20One%20Last%20Breath%20(ATLiens%20Remix).mp3",
    "songs/MOONLGHT%20-%20YeeDM%20x%20Stagecoach%20Mix%20Vol.%203.mp3",
    "songs/Country%20Night%20-%20YeeDM%20Sunset%20Mix.mp3",
-   "songs/Country%20Night%20-%20Morgan%20Wallen%20%26%20Drake%20Dance%20Remixes.mp3",
    "songs/Country%20Night%20-%20Country%20EDM%20Summer%20Mix.mp3",
    "songs/Country%20Night%20-%20YeeDM%20Party%20Mix.mp3",
    "songs/Kato%20%26%20Jon%20x%20Avicii%20x%20Sebastian%20Ingrosso%20%26%20Alesso%20-%20Turn%20The%20Lights%20Off%20-%20Levels%20-%20Calling%20(Mashup).mp3"
