@@ -15,13 +15,13 @@
 <link rel="apple-touch-icon" href="raiders-icon-180.png">
 <style>
 /* Layout: sticky header (brand, offline status, sound volume, stop), a grid of big pads for
-   Intros, Timeouts, Reactions and Music, and a practice player docked to the bottom that runs the playlist on its own.
+   Intros, Timeouts, Reactions, Music and Christmas, and a practice player docked to the bottom that runs the playlist on its own.
    Black and Vegas gold to match the Decatur Raiders branding. No web fonts, so nothing needs the internet. */
 :root{
   color-scheme:dark;
   --bg:#0f0f10; --panel:#18181b; --pad:#1c1c20; --pad-top:#25252a; --line:#2e2e34;
   --fg:#f3f1ea; --muted:#a09e96; --gold:#c5b358; --gold-hi:#e2d27e; --gold-ink:#17150a;
-  --c-intro:#e8833a; --c-timeout:#6cb6dc; --c-react:#c5b358; --c-music:#c9ccd3; --stop:#ff4b4b; --stop-ink:#1c0606;
+  --c-intro:#e8833a; --c-timeout:#6cb6dc; --c-react:#c5b358; --c-music:#c9ccd3; --c-xmas:#5fbf6a; --stop:#ff4b4b; --stop-ink:#1c0606;
   --f-display:"Arial Black","Segoe UI Black","Helvetica Neue",Impact,system-ui,sans-serif;
   --f-body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --f-mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
@@ -447,7 +447,7 @@ async function getMedia(path){
 
 /* ---------- sound pads (Web Audio, so they fire instantly and mix over the music) ---------- */
 const PADS=(window.PADS||[]).map(p=>({id:p.file,label:p.label,cat:p.cat,file:p.file}));
-const CATS=[{id:'intro',name:'Intros',note:'walk-out and starting lineup songs'},{id:'timeout',name:'Timeouts',note:'timeout and break music'},{id:'react',name:'Reactions',note:'buzzers, horns and crowd noise'},{id:'music',name:'Music',note:'themes and hype songs'}];
+const CATS=[{id:'intro',name:'Intros',note:'walk-out and starting lineup songs'},{id:'timeout',name:'Timeouts',note:'timeout and break music'},{id:'react',name:'Reactions',note:'buzzers, horns and crowd noise'},{id:'music',name:'Music',note:'themes and hype songs'},{id:'xmas',name:'Christmas',note:'upbeat holiday songs'}];
 let padVol=store.get('rd-vol',.9),ctx,master;
 function getCtx(){if(!ctx){ctx=new (window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=padVol;master.connect(ctx.destination)}return ctx}
 function ac(){const c=getCtx();if(c.state!=='running')c.resume().catch(()=>{});return c}
@@ -512,7 +512,7 @@ function renderChips(){
 function padEl(p){
   const el=document.createElement('div');el.className='pad'+(playing.has(p.id)?' on':'');el.dataset.id=p.id;el.style.setProperty('--c','var(--c-'+p.cat+')');
   el.innerHTML='<button type="button" class="hit"><span class="prog"></span><span class="led"></span><span class="lbl"></span><span class="foot"><span class="label"></span><span class="tm"></span></span></button><button type="button" class="fav"></button>';
-  el.querySelector('.lbl').textContent=p.label;el.querySelector('.tm').textContent=padDur.has(p.id)?fmtD(padDur.get(p.id)):'';el.querySelector('.label').textContent={intro:'Intro',timeout:'Timeout',music:'Music',react:'Reaction'}[p.cat]||'';
+  el.querySelector('.lbl').textContent=p.label;el.querySelector('.tm').textContent=padDur.has(p.id)?fmtD(padDur.get(p.id)):'';el.querySelector('.label').textContent={intro:'Intro',timeout:'Timeout',music:'Music',react:'Reaction',xmas:'Christmas'}[p.cat]||'';
   const f=el.querySelector('.fav');f.setAttribute('aria-pressed',favs.has(p.id));f.setAttribute('aria-label','Favorite '+p.label);f.textContent=favs.has(p.id)?'★':'☆';
   return el;
 }

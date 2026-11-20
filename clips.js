@@ -334,5 +334,65 @@ window.PADS=[
   "file": "clips/music-wii-sports-theme.mp3",
   "label": "Wii Sports theme",
   "cat": "music"
+ },
+ {
+  "file": "clips/xmas-burl-ives-a-holly-jolly-christmas.mp3",
+  "label": "A Holly Jolly Christmas",
+  "cat": "xmas"
+ },
+ {
+  "file": "clips/xmas-mariah-carey-all-i-want-for-christmas-is-you.mp3",
+  "label": "All I Want for Christmas Is You",
+  "cat": "xmas"
+ },
+ {
+  "file": "clips/xmas-lyric-noel-carol-of-the-bells-metal-version.mp3",
+  "label": "Carol of the Bells (Metal)",
+  "cat": "xmas"
+ },
+ {
+  "file": "clips/xmas-run-d-m-c-christmas-in-hollis.mp3",
+  "label": "Christmas in Hollis",
+  "cat": "xmas"
+ },
+ {
+  "file": "clips/xmas-jose-feliciano-feliz-navidad.mp3",
+  "label": "Feliz Navidad",
+  "cat": "xmas"
+ },
+ {
+  "file": "clips/xmas-bobby-helms-jingle-bell-rock.mp3",
+  "label": "Jingle Bell Rock",
+  "cat": "xmas"
+ },
+ {
+  "file": "clips/xmas-andy-williams-it-s-the-most-wonderful-time-of-the-year.mp3",
+  "label": "Most Wonderful Time of the Year",
+  "cat": "xmas"
+ },
+ {
+  "file": "clips/xmas-eagles-please-come-home-for-christmas.mp3",
+  "label": "Please Come Home for Christmas",
+  "cat": "xmas"
+ },
+ {
+  "file": "clips/xmas-brenda-lee-rockin-around-the-christmas-tree.mp3",
+  "label": "Rockin' Around the Christmas Tree",
+  "cat": "xmas"
+ },
+ {
+  "file": "clips/xmas-chuck-berry-run-rudolph-run.mp3",
+  "label": "Run Rudolph Run",
+  "cat": "xmas"
+ },
+ {
+  "file": "clips/xmas-kelly-clarkson-underneath-the-tree.mp3",
+  "label": "Underneath the Tree",
+  "cat": "xmas"
+ },
+ {
+  "file": "clips/xmas-trans-siberian-orchestra-wizards-in-winter.mp3",
+  "label": "Wizards in Winter",
+  "cat": "xmas"
  }
 ];
