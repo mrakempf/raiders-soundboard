@@ -566,6 +566,11 @@ window.SONGS=[
   "artist": "Waka Flocka Flame"
  },
  {
+  "file": "songs/Warren%20G%20-%20Regulate%20(ft.%20Nate%20Dogg)%20(Clean).mp3",
+  "title": "Regulate (ft. Nate Dogg) (Clean)",
+  "artist": "Warren G"
+ },
+ {
   "file": "songs/Young%20MC%20-%20Bust%20A%20Move.mp3",
   "title": "Bust A Move",
   "artist": "Young MC"

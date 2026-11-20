@@ -86,6 +86,7 @@ window.PLAYLISTS=[
    "songs/Trey%20Songz%20ft.%20Nicki%20Minaj%20-%20Bottoms%20Up.mp3",
    "songs/Ty%20Dolla%20%24ign%20-%20Or%20Nah%20(ft.%20Wiz%20Khalifa%20%26%20DJ%20Mustard).mp3",
    "songs/Waka%20Flocka%20Flame%20-%20Hard%20in%20da%20Paint%20(ft.%20Ciara).mp3",
+   "songs/Warren%20G%20-%20Regulate%20(ft.%20Nate%20Dogg)%20(Clean).mp3",
    "songs/Young%20MC%20-%20Bust%20A%20Move.mp3",
    "songs/Young%20Money%20-%20Trophies%20(ft.%20Drake).mp3",
    "songs/Young%20Thug%20-%20Digits.mp3"
