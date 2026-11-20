@@ -50,6 +50,7 @@ window.PLAYLISTS=[
    "songs/Kanye%20West%20-%20Champions.mp3",
    "songs/Kanye%20West%20-%20Power.mp3",
    "songs/Kendrick%20Lamar%20-%20Alright.mp3",
+   "songs/Kid%20Cudi%20-%20Day%20'N'%20Nite%20(Clean).mp3",
    "songs/Kid%20Cudi%20-%20Pursuit%20of%20Happiness.mp3",
    "songs/Kris%20Kross%20-%20Jump.mp3",
    "songs/Kurtis%20Blow%20-%20Basketball.mp3",

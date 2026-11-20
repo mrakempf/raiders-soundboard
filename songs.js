@@ -311,6 +311,11 @@ window.SONGS=[
   "artist": "Kendrick Lamar"
  },
  {
+  "file": "songs/Kid%20Cudi%20-%20Day%20'N'%20Nite%20(Clean).mp3",
+  "title": "Day 'N' Nite (Clean)",
+  "artist": "Kid Cudi"
+ },
+ {
   "file": "songs/Kid%20Cudi%20-%20Pursuit%20of%20Happiness.mp3",
   "title": "Pursuit of Happiness",
   "artist": "Kid Cudi"
