@@ -491,6 +491,11 @@ window.SONGS=[
   "artist": "Roy Woods"
  },
  {
+  "file": "songs/Run-D.M.C.%20-%20It's%20Tricky%20(Clean).mp3",
+  "title": "It's Tricky (Clean)",
+  "artist": "Run-D.M.C."
+ },
+ {
   "file": "songs/Run-D.M.C.%20ft.%20Aerosmith%20-%20Walk%20This%20Way.mp3",
   "title": "Walk This Way",
   "artist": "Run-D.M.C. ft. Aerosmith"
