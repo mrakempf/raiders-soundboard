@@ -128,7 +128,8 @@ window.PLAYLISTS=[
    "songs/Linkin%20Park%20-%20In%20the%20End.mp3",
    "songs/Red%20Hot%20Chili%20Peppers%20-%20Can't%20Stop.mp3",
    "songs/Dropkick%20Murphys%20-%20I'm%20Shipping%20Up%20to%20Boston.mp3",
-   "songs/Dropkick%20Murphys%20-%20The%20Boys%20Are%20Back.mp3"
+   "songs/Dropkick%20Murphys%20-%20The%20Boys%20Are%20Back.mp3",
+   "songs/Black%20Sabbath%20-%20Iron%20Man.mp3"
   ]
  }
 ];

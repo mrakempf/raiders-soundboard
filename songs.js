@@ -76,6 +76,11 @@ window.SONGS=[
   "artist": "Billy Idol"
  },
  {
+  "file": "songs/Black%20Sabbath%20-%20Iron%20Man.mp3",
+  "title": "Iron Man",
+  "artist": "Black Sabbath"
+ },
+ {
   "file": "songs/Black%20Sabbath%20-%20War%20Pigs.mp3",
   "title": "War Pigs",
   "artist": "Black Sabbath"
