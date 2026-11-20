@@ -186,6 +186,16 @@ window.SONGS=[
   "artist": "Drake & 21 Savage"
  },
  {
+  "file": "songs/Dropkick%20Murphys%20-%20I'm%20Shipping%20Up%20to%20Boston.mp3",
+  "title": "I'm Shipping Up to Boston",
+  "artist": "Dropkick Murphys"
+ },
+ {
+  "file": "songs/Dropkick%20Murphys%20-%20The%20Boys%20Are%20Back.mp3",
+  "title": "The Boys Are Back",
+  "artist": "Dropkick Murphys"
+ },
+ {
   "file": "songs/Eminem%20-%20'Till%20I%20Collapse.mp3",
   "title": "'Till I Collapse",
   "artist": "Eminem"

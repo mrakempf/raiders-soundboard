@@ -16,6 +16,11 @@ window.PADS=[
   "cat": "intro"
  },
  {
+  "file": "clips/intro-dropkick-murphys-i-m-shipping-up-to-boston.mp3",
+  "label": "I'm Shipping Up to Boston",
+  "cat": "intro"
+ },
+ {
   "file": "clips/intro-intro-jump-around.mp3",
   "label": "Jump Around",
   "cat": "intro"
@@ -33,6 +38,11 @@ window.PADS=[
  {
   "file": "clips/intro-intro-stayin-alive.mp3",
   "label": "Stayin' Alive",
+  "cat": "intro"
+ },
+ {
+  "file": "clips/intro-dropkick-murphys-the-boys-are-back.mp3",
+  "label": "The Boys Are Back",
   "cat": "intro"
  },
  {

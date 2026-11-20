@@ -125,7 +125,9 @@ window.PLAYLISTS=[
    "songs/Lynyrd%20Skynyrd%20-%20Sweet%20Home%20Alabama.mp3",
    "songs/Kansas%20-%20Carry%20On%20Wayward%20Son.mp3",
    "songs/Linkin%20Park%20-%20In%20the%20End.mp3",
-   "songs/Red%20Hot%20Chili%20Peppers%20-%20Can't%20Stop.mp3"
+   "songs/Red%20Hot%20Chili%20Peppers%20-%20Can't%20Stop.mp3",
+   "songs/Dropkick%20Murphys%20-%20I'm%20Shipping%20Up%20to%20Boston.mp3",
+   "songs/Dropkick%20Murphys%20-%20The%20Boys%20Are%20Back.mp3"
   ]
  }
 ];
